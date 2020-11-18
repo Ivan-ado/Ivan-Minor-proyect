@@ -206,6 +206,31 @@ def beardandhappy(imageinformation):
             datosbarba.append(gender)
     print("La persona más feliz es",datosfeliz,"con",tem,"de felicidad.  El que tiene más barba es", datosbarba," con",tem2)
 
+def consulta_mayorgenero(imageinformation):
+    cuentahombre=0
+    cuentamujer=0
+    for n in imageinformation:
+        a = n["faceAttributes"]
+        gender= a["gender"]
+        if gender == "male":
+            cuentahombre=cuentahombre+1
+        else:
+            cuentamujer= cuentamujer+1
+    if cuentahombre > cuentamujer:
+        print("en la imagen hay más hombre que mujeres")
+    else:
+        print("en la imagen hay más mujeres que hombre")
+
+def consulta_agerpeople(imageinformation):
+    contador=0
+    for n in imageinformation:
+        a = n["faceAttributes"]
+        emotions = a ["emotion"]
+        anger = emotions["anger"]
+        if anger > 0.5:
+            contador=contador+1
+    print("en la imagen hay",contador,"personas enojadas")
+
 def  show_age_and_gender_quick(faces): #>>>>>>>>>>>>>>>><>>><<>>>>>><<>><<
 
     ages_faces=[]
@@ -428,16 +453,28 @@ if __name__ == "__main__":
     information=emotions(picture)
     hist=historial_consultas(information) #////
     young_emotions_rec(picture, hist)   #////
-    information=emotions(picture)
+    print("en esta funcion se muestran la cantidad de personas por imagen")
     totalfaces=facesperimage(information)
+    print("/////////////////")
+    print("en esta funcion se muestra quien es la persona más joven de la imagen")
     masjoven(information)
+    print("/////////////////")
+    print("en esta funcion se muestran las edades de las personas ordenadas por el metodo sort")
     metodosort(jovengenerosort(information))
+    print("/////////////////")
     agender10x10(metodosort(jovengenerosort(information)))
     average=agesaverage(information)
     metodoquicksort(faceIdgenderage(information))
     happiness(information)
     happyunderage(information,average)
     beardandhappy(information)
+    print("/////////////////")
+    print("funcion que muestra si hay más hombres que mujeres o biceversa en la imagen")
+    consulta_mayorgenero(information)
+    print("/////////////////")
+    print("funcion que muestra cuanta gente enojada hay en la imagen")
+    consulta_agerpeople(information)
+    print("/////////////////")
     #<>>><><<<<<<>>>>><<<<<>>><<<>><<<<>><<<>><<<>>>
     show_age_and_gender_quick(information) #////
     blonde_female(information) #/////
