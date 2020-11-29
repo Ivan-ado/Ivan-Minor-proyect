@@ -5,6 +5,40 @@ import json
 import cognitive_face as CF
 from PIL import Image, ImageDraw, ImageFont
 
+
+class Person():
+    def __init__(self,identification, personid,name, age, gender, photoroute):
+        self.identification = identification
+        self.personid = personid
+        self.name = name
+        self.age = age
+        self.gender = gender
+        self.photoroute = photoroute
+    """ 
+    def printpeople(self):
+        print("los datos de la persona son")
+        print(self.identification)
+        print(self.personid)
+        print(self.name)
+        print(self.age)
+        print(self.gender)
+        print(self.photoroute)
+    """
+class Familly(Person):
+    def __init__(self, numembers, relation):
+        self.numembers = numembers
+        self.relation = relation
+
+class Friends(Person):
+    def __init__(self, numembers, relation):
+        self.numembers = numembers
+        self.relation = relation
+
+class Famous(Person):
+    def __init__(self, numembers, relation):
+        self.numembers = numembers
+        self.relation = relation
+
 subscription_key = None
 
 SUBSCRIPTION_KEY = 'bd6c79bb7a4c418a9444d2cf7304de08'
@@ -446,9 +480,30 @@ def show_id_emotions(faces):     #<>><<<<<<><<>><<>>><<<<<<<>><>><<><
         for x, y in emotion.items():
             print('\t',x + ':', y) 
 
+def informationclassperson():
+
+    print("digite la ruta hacia la imagen de la persona")
+    route= input() 
+    print("digite la identificacion de la persona")
+    identi= int(input())
+    print("digite el nombre de la persona")
+    name= input()  
+
+    information= emotions(route)
+    for a in information:
+        carac=a["faceAttributes"]
+        faceId=a["faceId"]
+        age=carac["age"]
+        gender=carac["gender"]
+
+    human = Person(identi,faceId,name,age,gender,route)
+    human.printpeople()
+
+    print(human)
 
 
 if __name__ == "__main__":  
+    """
     picture = input("Introduzca el path de la imagen: ")
     information=emotions(picture)
     hist=historial_consultas(information) #////
@@ -482,3 +537,5 @@ if __name__ == "__main__":
     glasses_ungry(information) #><<<<<
     show_faceId_and_hair_color(information)
     show_id_emotions(information) 
+    """
+    informationclassperson()
