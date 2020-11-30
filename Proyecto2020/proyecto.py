@@ -25,19 +25,29 @@ class Person():
         print(self.photoroute)
     """
 class Familly(Person):
-    def __init__(self, numembers, relation):
+    def __init_subclass__(self,identification,personid,name,age,gender,photoroute,numembers,relation):
+
+        Person.__init__(self,identification,personid,name,age,gender,photoroute)
         self.numembers = numembers
         self.relation = relation
 
 class Friends(Person):
-    def __init__(self, numembers, relation):
+
+    def __init_subclass__(self,identification,personid,name,age,gender,photoroute,numembers,relation):
+
+        Person.__init__(self,identification,personid,name,age,gender,photoroute)
         self.numembers = numembers
         self.relation = relation
 
+
 class Famous(Person):
-    def __init__(self, numembers, relation):
+
+    def __init_subclass__(self,identification,personid,name,age,gender,photoroute,numembers,relation):
+
+        Person.__init__(self,identification,personid,name,age,gender,photoroute)
         self.numembers = numembers
         self.relation = relation
+
 
 subscription_key = None
 
@@ -68,6 +78,27 @@ def emotions(picture):
     #quitar el # para que el sistema imprima la lista con los datos
     #print(analysis)
     return analysis
+
+def creategroup(groupid,groupname):
+
+    CF.person_group.create(groupid,groupname)
+    print("grupo creado")
+
+def createpersonforgroup(persona,group_id):
+    
+    identi= persona.identification
+    idpersona= persona.personid
+    name= persona.name
+    age= persona.age 
+    gender= persona.gender
+
+    user_data = [identi, idpersona, age, gender]
+    photoroute = persona.photoroute
+
+    response = CF.person.create(group_id,name,user_data)
+
+    peopleid= response["personId"]
+    CF.person.add_face(photoroute, group_id, peopleid)
 
 def metodosort(lista):
     indexacion = range(1,len(lista))
@@ -497,9 +528,6 @@ def informationclassperson():
         gender=carac["gender"]
 
     human = Person(identi,faceId,name,age,gender,route)
-    human.printpeople()
-
-    print(human)
 
 
 if __name__ == "__main__":  
